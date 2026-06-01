@@ -1,0 +1,12 @@
+node_modules/
+.next/
+dev.log
+server.log
+*.tsbuildinfo
+upload/
+download/
+db/*.db
+db/*.db-journal
+.env
+.env.local
+.env*.local
