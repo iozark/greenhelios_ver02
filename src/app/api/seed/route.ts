@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { requireAuth } from "@/lib/require-auth";
 import bcrypt from "bcryptjs";
 
 // POST /api/seed - Create default admin user
@@ -191,8 +190,15 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// GET /api/seed - Check if seeded
+// GET /api/seed - Check if seeded (requires auth)
 export async function GET() {
-  const count = await db.user.count();
-  return NextResponse.json({ userCount: count, seeded: count > 0 });
+  const auth = await requireAuth();
+  if (auth.response) return auth.response;
+
+  try {
+    const count = await db.user.count();
+    return NextResponse.json({ userCount: count, seeded: count > 0 });
+  } catch {
+    return NextResponse.json({ error: "Failed to check seed status" }, { status: 500 });
+  }
 }

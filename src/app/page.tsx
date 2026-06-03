@@ -25,9 +25,11 @@ export default function Home() {
     if (seeded.current) return;
     seeded.current = true;
 
-    fetch("/api/seed", { method: "POST" }).catch(() => {
-      // Silently fail — the seed endpoint already handles "already exists"
-    });
+    fetch("/api/seed", { method: "POST" })
+      .then((res) => {
+        if (!res.ok) res.json().then((d) => console.error("[seed] failed:", d));
+      })
+      .catch((err) => console.error("[seed] request error:", err));
   }, []);
 
   // Show nothing while the session is being resolved to avoid flash
