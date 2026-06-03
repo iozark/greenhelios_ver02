@@ -61,29 +61,25 @@ export function LoginPage() {
     }
   };
 
-  const handleDemoLogin = () => {
+  const handleDemoLogin = async () => {
+    setError("");
+    setLoading(true);
     setEmail("admin@greenhelios.local");
     setPassword("admin123");
-    // Auto-submit after setting the values
-    setTimeout(async () => {
-      setError("");
-      setLoading(true);
-      try {
-        const result = await signIn("credentials", {
-          email: "admin@greenhelios.local",
-          password: "admin123",
-          redirect: false,
-        });
-
-        if (result?.error) {
-          setError(mapAuthError(result.error, t));
-        }
-      } catch {
-        setError(tCommon("unexpectedError"));
-      } finally {
-        setLoading(false);
+    try {
+      const result = await signIn("credentials", {
+        email: "admin@greenhelios.local",
+        password: "admin123",
+        redirect: false,
+      });
+      if (result?.error) {
+        setError(mapAuthError(result.error, t));
       }
-    }, 100);
+    } catch {
+      setError(tCommon("unexpectedError"));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
