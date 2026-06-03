@@ -54,6 +54,8 @@ model Property {
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   incomes  Income[]
   expenses Expense[]
+
+  @@index([userId])
 }
 
 model Income {
@@ -65,6 +67,9 @@ model Income {
   createdAt   DateTime @default(now())
 
   property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId])
+  @@index([date])
 }
 
 model Expense {
@@ -77,6 +82,9 @@ model Expense {
   createdAt   DateTime @default(now())
 
   property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId])
+  @@index([date])
 }
 
 model Notification {
@@ -89,4 +97,6 @@ model Notification {
   userId    String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
