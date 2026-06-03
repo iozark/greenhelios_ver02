@@ -288,7 +288,7 @@ function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
             className="relative flex items-center gap-2 px-2"
           >
             <Avatar className="size-8 border border-primary/20">
-              <AvatarImage src="/logo.png" alt={tc("user")} />
+              <AvatarImage src="" alt="" />
               <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
                 {userInitials}
               </AvatarFallback>
